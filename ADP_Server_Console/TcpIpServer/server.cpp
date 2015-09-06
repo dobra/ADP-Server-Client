@@ -117,17 +117,16 @@ void Server::SendInformation(CommandTypes command, QString data)
     tcpclient->write(block);
 }
 
-QString Server::startRead()
+void Server::startRead()
 {
   char buffer[1024] = {0};
 
   tcpclient->read(buffer, sizeof(buffer));
   report((QString)buffer);
-  if(song->Play_Song((QString)buffer))
-  {
-    QThread::sleep(1);
-    QString str;
-    SendInformation((CommandTypes)1,str.number(song->Get_Duration()));
-  }
+  song->Play_Song((QString)buffer);
+
+    //QString str;
+    //SendInformation((CommandTypes)1,str.number(song->Get_Duration()));
+
 
 }

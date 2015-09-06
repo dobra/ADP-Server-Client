@@ -30,7 +30,7 @@ private slots:
     void readSongs();
 private:
     QString hostString="192.168.100.8";
-    QString portString="57104";
+    QString portString="56329";
     QTcpSocket *tcpSocket;
     QString currentFortune;
     quint16 blockSize;

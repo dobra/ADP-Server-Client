@@ -76,22 +76,20 @@ void songs::report(const QString& msg)
     qDebug("[%i] ADP_Server: %s", (int)QCoreApplication::applicationPid(), qPrintable(msg));
 }
 
-qint8 songs::Play_Song(QString Song_path)
+void songs::Play_Song(QString Song_path)
 {
     report("Song: %s started playing."+Song_path);
     if(Song_path == "Stop!")
     {
-        return 5;
-       // ADP_player->stop();
+        ADP_player->stop();
+        //return 5;
     }
         else
     {
         ADP_player->setMedia(QUrl::fromLocalFile(Song_path));
         ADP_player->play();
     }
-//    QThread::sleep(10);
     report("Song playing."+Song_path);
-return 0;
 }
 
 void songs::Add_To_Song_List (QString song)

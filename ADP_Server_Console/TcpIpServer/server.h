@@ -37,7 +37,7 @@ private slots:
     void sessionOpened();
     void GetNewConnection();
     void SendInformation(CommandTypes command, QString data);
-    QString startRead();
+    void startRead();
 
 private:
     songs *song= songs::getInstange();                 //
