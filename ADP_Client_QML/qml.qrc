@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Song_Rectangle.qml</file>
+        <file>ListBox.qml</file>
+        <file>Generate_Songs.js</file>
+    </qresource>
+</RCC>
