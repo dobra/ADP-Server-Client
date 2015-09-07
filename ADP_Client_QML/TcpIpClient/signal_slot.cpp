@@ -56,26 +56,16 @@ void TCP_Song::readSongs()
     if (blockSize == 0) {
         if (tcpSocket->bytesAvailable() < (int)sizeof(quint16))
             return;
-
         in >> blockSize;
     }
 
-  //  if (tcpSocket->bytesAvailable() < blockSize)
-   //     return;
 
+    qDebug()<<"Am ajuns aici cu:"<<tcpSocket->bytesAvailable()<<endl;
     QString nextFortune;
     in >> nextFortune;
-
-    if (nextFortune == currentFortune) {
-        QTimer::singleShot(0, this, SLOT(requestNewFortune()));
-        return;
-    }
-
     currentFortune = nextFortune;
 
 
-
-    qDebug()<<currentFortune<<endl;
     switch(currentFortune.at(0).toLatin1())
     {
     case '0':
@@ -83,7 +73,7 @@ void TCP_Song::readSongs()
         Songs_List = currentFortune.split(",");
         foreach (QString song, Songs_List)
         {
-          this->send_Signal(song);
+          this->send_Song_Signal(song);
         }
 
         qDebug()<<currentFortune<<endl;
@@ -95,6 +85,7 @@ void TCP_Song::readSongs()
         break;
     }
     }
+    blockSize = 0;
 
 
 }
@@ -127,7 +118,7 @@ void TCP_Song::requestNewConnection()
 }
 
 
-void TCP_Song::send_Signal(const QString value1)
+void TCP_Song::send_Song_Signal(const QString value1)
 {
     qDebug() << "I've emited:" << value1 <<endl;
     emit valueSignal(GetSongName(value1));
@@ -150,7 +141,7 @@ QString TCP_Song::GetSongName(const QString SongFullName)
 void TCP_Song::SendSong(const QString SongName)
 {
     QByteArray ba ;
-    if(SongName == "Stop!")
+    if(SongName == "0Stop!")
     {
         ba = SongName.toLatin1();
     }

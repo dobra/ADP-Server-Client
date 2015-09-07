@@ -15,7 +15,7 @@ public slots:
 public:
     TCP_Song(void);
     void requestNewConnection();
-    void send_Signal(const QString value);
+    void send_Song_Signal(const QString value);
 
 signals:
     void valueSignal(QVariant value1);
@@ -30,7 +30,7 @@ private slots:
     void readSongs();
 private:
     QString hostString="192.168.100.8";
-    QString portString="56329";
+    QString portString="47896";
     QTcpSocket *tcpSocket;
     QString currentFortune;
     quint16 blockSize;

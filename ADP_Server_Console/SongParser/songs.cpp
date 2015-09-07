@@ -1,5 +1,4 @@
 #include "songs.h"
-#include "QThread"
 songs* songs::my_Singleton = NULL;
 
 
@@ -115,5 +114,5 @@ bool songs::Verify_Song_Exists(QString song)
 
 qint64 songs::Get_Duration()
 {
-    return ADP_player->duration();
+    return ADP_player->position();
 }

@@ -1,6 +1,7 @@
 #include <QtNetwork>
 
 #include <stdlib.h>
+#include "QThread"
 #include "TcpIpServer/server.h"
 
 Server *Server::my_Singleton = NULL;
@@ -65,7 +66,8 @@ void Server::sessionOpened()
         settings.endGroup();
     }
     tcpServer = new QTcpServer(this);
-    if (!tcpServer->listen()) {
+
+    if (!tcpServer->listen(QHostAddress::Any, (quint16)47896)) {
         report(tr("Unable to start the server: %1.") .arg(tcpServer->errorString()));
         EXIT_FAILURE;
     }
@@ -123,10 +125,21 @@ void Server::startRead()
 
   tcpclient->read(buffer, sizeof(buffer));
   report((QString)buffer);
-  song->Play_Song((QString)buffer);
+  switch(buffer[0])
+  {
+  case '0':
+  {
+      QString str;
+      SendInformation((CommandTypes)1,str.number(song->Get_Duration()));
+      break;
+  }
+  default:
+  {
 
-    //QString str;
-    //SendInformation((CommandTypes)1,str.number(song->Get_Duration()));
+      song->Play_Song((QString)buffer);
+      break;
+  }
+  }
 
 
 }

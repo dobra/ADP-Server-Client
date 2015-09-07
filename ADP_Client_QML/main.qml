@@ -12,6 +12,7 @@ ApplicationWindow
     title: qsTr("ADP_Player")
 
     property var songcounts: 0;
+    property real progress:0;
 
 
     function qmlSlot(mesaj)
@@ -20,11 +21,29 @@ ApplicationWindow
         renumita_lista.append(
                     {"name":mesaj, "number":main_window.songcounts
                            })
+    }
 
+    function qmlSongDuration(mesaj)
+    {
 
     }
+
     signal qmlSignal(string msg)
 
+
+    function timerTriggered()
+    {
+        if (progress >= 1.0 )
+        {
+            progress = 0;
+            timer_item.running=false;
+        }
+        else
+            progress = progress + 0.05;
+
+        console.log(progress);
+
+    }
 
     Rectangle{
         width: 200; height:200
@@ -34,10 +53,25 @@ ApplicationWindow
             anchors.fill: parent;
             onClicked:
             {
-                qmlSignal("Stop!");
+                qmlSignal("0Stop!");
+               console.log(container.progress);
             }
         }
     }
+
+    Rectangle {
+        id: progressHorizontal1
+        width: 450
+        height: 30
+        anchors.bottom: parent.bottom
+        ProgressBarDC
+        {
+            anchors.fill: parent
+            id:container
+            progress: main_window.progress
+        }
+    }
+
 
 
     ListBox
@@ -96,5 +130,16 @@ ApplicationWindow
            }
 
     }
+
+    Item {
+
+
+        Timer {
+             id:timer_item
+            interval: 500; running: true; repeat: true
+            onTriggered: main_window.timerTriggered();
+        }
+    }
+
 
 }
