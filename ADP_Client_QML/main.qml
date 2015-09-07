@@ -1,7 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import "./"
-
+/*Everything is interesting*/
 ApplicationWindow
 {
     objectName: "Dobra_List"
@@ -67,7 +67,7 @@ ApplicationWindow
 
     Rectangle {
         id: progressHorizontal1
-        width: 800
+        width: 720
         height: 30
         anchors.bottom: parent.bottom
         ProgressBarDC
