@@ -127,10 +127,20 @@ void Server::startRead()
   report((QString)buffer);
   switch(buffer[0])
   {
-  case '0':
+  case '1':
   {
       QString str;
       SendInformation((CommandTypes)1,str.number(song->Get_Duration()));
+      break;
+  }
+  case '0':
+  {
+      song->Pause_Song();
+      break;
+  }
+  case '2':
+  {
+      song->Resume_Song();
       break;
   }
   default:

@@ -81,7 +81,9 @@ void TCP_Song::readSongs()
     }
     case '1':
     {
+        currentFortune=currentFortune.mid(3,3);
         qDebug()<<currentFortune<<endl;
+        emit SongDurationSignal(currentFortune);
         break;
     }
     }
@@ -141,16 +143,35 @@ QString TCP_Song::GetSongName(const QString SongFullName)
 void TCP_Song::SendSong(const QString SongName)
 {
     QByteArray ba ;
-    if(SongName == "0Stop!")
+
+
+    switch (SongName.at(0).toLatin1()) {
+    case '1':
     {
         ba = SongName.toLatin1();
+        break;
     }
-    else
-    foreach (QString song, Songs_List)
+    case '0':
     {
-        if(song.contains(SongName))
-      ba = song.toLatin1();
+        ba = SongName.toLatin1();
+        break;
     }
+    case '2':
+    {
+        ba = SongName.toLatin1();
+        break;
+    }
+    default:
+    {
+        foreach (QString song, Songs_List)
+        {
+            if(song.contains(SongName))
+          ba = song.toLatin1();
+        }
+        break;
+    }
+    }
+
 
 
     tcpSocket->write(ba.data());

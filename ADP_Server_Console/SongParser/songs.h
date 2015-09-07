@@ -15,6 +15,8 @@ public:
     void Add_To_Song_List (QString song);
     bool Verify_Song_Exists(QString song);
     void Play_Song(QString path);
+    void Pause_Song();
+    void Resume_Song();
     void Change_Volume(int Volume);
     void Refresh_Songs(QDir Songs_folders);
     qint64 Get_Duration();

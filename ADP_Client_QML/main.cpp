@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     TCP_Song a1;
     QObject::connect(topLevel, SIGNAL(qmlSignal(QString)), &a1, SLOT(cppSlot(QString)));
     QObject::connect(&a1, SIGNAL(valueSignal(QVariant)), topLevel, SLOT(qmlSlot(QVariant)));
+    QObject::connect(&a1, SIGNAL(SongDurationSignal(QVariant)), topLevel, SLOT(qmlSongDuration(QVariant)));
 
     a1.requestNewConnection();
     return app.exec();

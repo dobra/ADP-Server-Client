@@ -19,6 +19,7 @@ public:
 
 signals:
     void valueSignal(QVariant value1);
+    void SongDurationSignal(QVariant value1);
 
 private:
     QString GetSongName(const QString SongFullName);

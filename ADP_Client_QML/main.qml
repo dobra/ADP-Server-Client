@@ -12,6 +12,7 @@ ApplicationWindow
     title: qsTr("ADP_Player")
 
     property var songcounts: 0;
+    property var player_status:"NotPlaying";
     property real progress:0;
 
 
@@ -25,7 +26,9 @@ ApplicationWindow
 
     function qmlSongDuration(mesaj)
     {
-
+        progress= mesaj/100;
+        if(progress == 1)
+            timer_item.running=false;
     }
 
     signal qmlSignal(string msg)
@@ -33,16 +36,7 @@ ApplicationWindow
 
     function timerTriggered()
     {
-        if (progress >= 1.0 )
-        {
-            progress = 0;
-            timer_item.running=false;
-        }
-        else
-            progress = progress + 0.05;
-
-        console.log(progress);
-
+        qmlSignal("1RefSongDuration");
     }
 
     Rectangle{
@@ -53,15 +47,27 @@ ApplicationWindow
             anchors.fill: parent;
             onClicked:
             {
-                qmlSignal("0Stop!");
-               console.log(container.progress);
+                console.log(container.progress);
+                if(player_status == "Playing")
+                {
+                    player_status="Paused";
+                    qmlSignal("0Stop!");
+                    timer_item.running=false;
+                }
+                else
+                    if(player_status == "Paused")
+                    {
+                        player_status="Playing";
+                        qmlSignal("2Resume!");
+                        timer_item.running=true;
+                    }
             }
         }
     }
 
     Rectangle {
         id: progressHorizontal1
-        width: 450
+        width: 800
         height: 30
         anchors.bottom: parent.bottom
         ProgressBarDC
@@ -80,7 +86,7 @@ ApplicationWindow
     }
 
     ListView {
-        width: 180; height: 400
+        width: 180; height: 800
         id: listview1
         Component {
             id: contactsDelegate
@@ -101,6 +107,8 @@ ApplicationWindow
                     {
                         listview1.currentIndex = index;
                         main_window.qmlSignal(name);
+                        timer_item.running=true;
+                        player_status="Playing";
                     }
 
                 }
@@ -136,7 +144,7 @@ ApplicationWindow
 
         Timer {
              id:timer_item
-            interval: 500; running: true; repeat: true
+            interval: 1000; running: false; repeat: true
             onTriggered: main_window.timerTriggered();
         }
     }

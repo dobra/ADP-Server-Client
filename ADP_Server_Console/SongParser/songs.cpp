@@ -78,17 +78,18 @@ void songs::report(const QString& msg)
 void songs::Play_Song(QString Song_path)
 {
     report("Song: %s started playing."+Song_path);
-    if(Song_path == "Stop!")
-    {
-        ADP_player->stop();
-        //return 5;
-    }
-        else
-    {
         ADP_player->setMedia(QUrl::fromLocalFile(Song_path));
         ADP_player->play();
-    }
     report("Song playing."+Song_path);
+}
+void songs::Pause_Song()
+{
+    ADP_player->pause();
+}
+
+void songs::Resume_Song()
+{
+    ADP_player->play();
 }
 
 void songs::Add_To_Song_List (QString song)
@@ -114,5 +115,8 @@ bool songs::Verify_Song_Exists(QString song)
 
 qint64 songs::Get_Duration()
 {
-    return ADP_player->position();
+    if(ADP_player->duration() > 0)
+    return (qint64)((ADP_player->position()*100)/ADP_player->duration());
+        else
+    return 0;
 }
