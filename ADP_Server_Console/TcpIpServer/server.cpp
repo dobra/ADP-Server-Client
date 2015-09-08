@@ -124,7 +124,6 @@ void Server::startRead()
   char buffer[1024] = {0};
 
   tcpclient->read(buffer, sizeof(buffer));
-  report((QString)buffer);
   switch(buffer[0])
   {
   case '1':
@@ -141,6 +140,11 @@ void Server::startRead()
   case '2':
   {
       song->Resume_Song();
+      break;
+  }
+  case '3':
+  {
+      song->Change_Volume(((QString)buffer).mid(1,3).toInt());
       break;
   }
   default:

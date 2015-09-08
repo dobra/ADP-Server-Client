@@ -147,17 +147,22 @@ void TCP_Song::SendSong(const QString SongName)
 
     switch (SongName.at(0).toLatin1()) {
     case '1':
-    {
+    {   //Sending duration
         ba = SongName.toLatin1();
         break;
     }
     case '0':
-    {
+    {   //Sending Stop
         ba = SongName.toLatin1();
         break;
     }
     case '2':
-    {
+    {   //Sending Resume
+        ba = SongName.toLatin1();
+        break;
+    }
+    case '3':
+    {   //Sending volume
         ba = SongName.toLatin1();
         break;
     }

@@ -149,5 +149,20 @@ ApplicationWindow
         }
     }
 
+    Slider {
+        id: sliderVertical1
+        x: 18
+        y: 817
+        minimumValue: 0
+        maximumValue: 100
+        stepSize: 1
+        orientation: Qt.Vertical
+
+        onValueChanged:
+        {
+            qmlSignal("3"+sliderVertical1.value);
+        }
+    }
+
 
 }
